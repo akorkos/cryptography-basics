@@ -1,0 +1,29 @@
+\section{Άσκηση 4.3}
+
+\subsection{Εκφώνηση}
+
+Αν Σ ένα σύνολο με |Σ| συμβολίζουμε το πλήϑος των στοιχείων του, υπολογίστε τη διαφορική ομοιομορφία (differential uniformity) του S-box,
+
+\begin{equation}
+     Diff(S) = \max_{x \in \{0,1\}^6 - \{0\}, y\in \{0,1\}^4} \{|z \in \{0,1\}^6 : S(z \oplus x) \oplus S(z) = y\}|
+\end{equation}
+
+Γενικά, για S-boxes:
+
+\begin{equation}
+    S : \{0, 1\}^n \rightarrow \{0, 1\}^m
+\end{equation}
+
+ο προηγούμενος ορισμός γράφεται:
+
+\begin{equation}
+     Diff(S) = \max_{x \in \{0,1\}^n - \{0\}, y\in \{0,1\}^m} \{|z \in \{0,1\}^n : S(z \oplus x) \oplus S(z) = y\}|
+\end{equation}
+
+και ισχύει:
+
+\begin{equation}
+    Diff(S) \ge \max \{2, 2^{n-m}\}
+\end{equation}
+
+Όσο μικρότερη είναι αυτή η ποσότητα, τόσο πιο ανθεκτικό είναι το S-box στη διαφορική κρυπτανάλυση.

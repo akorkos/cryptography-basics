@@ -56,7 +56,7 @@ def decrypt(cipher: str, key: str) -> str:
 
 
 if __name__ == '__main__':
-    message = "ALEX"
+    message = "WEALLMAKEMISTAKESANDWEALLPAYAPRICE"
     N = len(message)
     key = keyGenerator(N)
 

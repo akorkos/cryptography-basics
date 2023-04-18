@@ -1,0 +1,28 @@
+\section{Άσκηση 3.6}
+
+\subsection{Εκφώνηση}
+
+Αποδεικνύεται ότι το πλήθος των ανάγωγων πολυωνύμων βαθμού n στο σώμα $\mathbb{F}_2$ είναι
+
+\begin{equation}
+    N_2(n) = \frac{1}{n} \sum_{d|n}\mu(d) \cdot 2^{n/d},
+\end{equation}
+
+όπου
+
+\begin{equation}
+    \mu(d) = 
+    \begin{cases}
+      1 & d = 1 \\
+      (-1)^k & d = p_1p_2\cdot\cdot\cdotp_k p_i :\text{πρώτοι}\\
+      0 & \text{αλλού}
+    \end{cases}
+\end{equation}
+
+Με το σύμβολο $d|n$ εννοούμε όλους τους θετικούς διαιρέτες του n. π.χ. αν $n = 30$, τότε
+
+\begin{equation}
+    \{d|n: 1 \le d \le n\} = \{1, 2, 3, 5, 6, 10, 15, 30\}
+\end{equation}
+
+Με χρήση του συστήματος sagemath υπολογίστε το $N_2(10)$.
