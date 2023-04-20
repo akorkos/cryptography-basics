@@ -1,3 +1,5 @@
+import sys
+
 N = 32
 
 ALPHABET = {
@@ -73,6 +75,10 @@ def decrypt(cipher: list, key: str) -> list:
 if __name__ == '__main__':
     message = 'MISTAKES ARE AS SERIOUS AS THE RESULTS THEY CAUSE'
     key = "HOUSE"
+
+    if len(sys.argv) > 2:
+        message = str(sys.argv[1])
+        key = str(sys.argv[2])
 
     encrypted = encrypt(message, key)
     print(toString(encrypted))
