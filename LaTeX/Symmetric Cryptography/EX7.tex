@@ -2,10 +2,36 @@
 
 \subsection{Εκφώνηση}
 
-Υλοποιήστε τον RC4. Χρησιμοποιώντας το κλειδί \b{HOUSE} κρυπτογραφήστε το μήνυμα (ξαναγράψτε το χωρίς κενά):
+Υλοποιήστε τον RC4. Χρησιμοποιώντας το κλειδί \t{HOUSE} κρυπτογραφήστε το μήνυμα (ξαναγράψτε το χωρίς κενά):
 \begin{center}
-    \b{MISTAKES ARE AS SERIOUS AS THE RESULTS THEY CAUSE}
+    \t{MISTAKES ARE AS SERIOUS AS THE RESULTS THEY CAUSE}
 \end{center}
 
 Η υλοποίηση σας πρέπει και να αποκρυπτογραφεί σωστά. Χρησιμοποιήστε τον πίνακα
 της άσκησης 3.5.
+
+\subsection{Λύση} 
+
+\subsubsection{Λεπτομέρειες για την υλοποίηση}
+
+Εκτέλεση αρχείου:
+
+\begin{center}
+    \t{python rc4.py <μήνυμα> <κλειδί>}
+\end{center}
+
+Τα arguments <μήνυμα> και <κλειδί> είναι προαιρετικά σε περίπτωση που θέλει ο χρήστης να το RC4 με άλλες τιμές, οι προκαθορισμένες τιμές είναι αυτές που δίνονται στην εκφώνηση.
+
+\subsubsection{Συμπέρασμα}
+
+Εκτελώντας το αρχείο για τις τιμές της εκφώνησης, επιστρέφεται το εξής κρυπτογραφημένο μήνυμα: 
+
+\begin{center}
+    \t{IGD!APO-TJUQPDSPMAOZUIAZ(VF(VFGQ.IIWMB(WX}
+\end{center}
+
+Ενώ η αποκρυπτογραφημένη μορφή του παραπάνω μηνύματος είναι: 
+
+\begin{center}
+    \t{MISTAKESAREASSERIOUSASTHERESULTSTHEYCAUSE}
+\end{center}

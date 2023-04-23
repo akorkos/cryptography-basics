@@ -1,6 +1,14 @@
 import numpy as np
+import matplotlib
 import matplotlib.pyplot as plt
 
+matplotlib.use("pgf")
+matplotlib.rcParams.update({
+    "pgf.texsystem": "xelatex",
+    'font.family': 'serif',
+    'text.usetex': True,
+    'pgf.rcfonts': False,
+})
 
 S = np.array([
     [0, 2, 3, 7, 9, 12, 15, 7, 6, 15, 15, 1, 7, 3, 1, 0],
@@ -8,7 +16,6 @@ S = np.array([
     [5, 3, 5, 12, 11, 1, 1, 5, 13, 0, 15, 7, 2, 2, 13, 0],
     [3, 12, 3, 11, 2, 2, 2, 4, 6, 5, 5, 0, 4, 3, 1, 0]
 ])
-
 
 def XOR(a: list, b: list) -> list:
     N = len(a)
@@ -46,5 +53,6 @@ if __name__ == '__main__':
     plt.title("Διαφορική ομοιομορφία")
     plt.ylabel("Συχνότητα")
     plt.xlabel("Τιμή")
-    plt.plot(freq.keys(), freq.values(), color="r")
-    plt.show()
+    plt.bar(freq.keys(), freq.values(), color="r")
+    # plt.show()
+    plt.savefig('sbox.pgf')

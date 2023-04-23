@@ -81,7 +81,7 @@ if __name__ == '__main__':
         key = str(sys.argv[2])
 
     encrypted = encrypt(message, key)
-    print(toString(encrypted))
+    print('[1] Encrypted message:', toString(encrypted))
 
     decrypted = decrypt(encrypted, key)
-    print(toString(decrypted))
+    print('[2] Decrypted message:', toString(decrypted))

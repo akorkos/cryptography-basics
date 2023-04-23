@@ -57,7 +57,7 @@ def decrypt(cipher: str, key: str) -> str:
 
 
 if __name__ == '__main__':
-    message = "WEALLMAKEMISTAKESANDWEALLPAYAPRICE"
+    message = "MISTAKES ARE AS SERIOUS AS THE RESULTS THEY CAUSE"
 
     if len(sys.argv) > 1:
         message = str(sys.argv[1])
@@ -66,7 +66,7 @@ if __name__ == '__main__':
     key = keyGenerator(N)
 
     encrypted = encrypt(message, key)
-    print(encrypted)
+    print('[1] Encrypted message:', encrypted)
 
     decrypted = decrypt(encrypted, key)
-    print(decrypted)
+    print('[2] Decrypted message:', decrypted)

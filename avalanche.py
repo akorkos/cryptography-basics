@@ -2,7 +2,7 @@ from random import randint
 from Crypto.Cipher import AES
 from bitstring import BitArray
 from statistics import mean
-import sys
+
 def createMessages(N: int = 256) -> list:
     m1 = []
     m2 = []
@@ -47,8 +47,6 @@ def encrypt(key: bytes, mode: AES, iv: str = '', N: int = 200) -> int:
 
 if __name__ == '__main__':
     N = 128
-    if len(sys.argv) > 1:
-        N = int(sys.argv[1])
     key = randomBinaryNumberGenerator(N)
     iv = randomBinaryNumberGenerator(N)
     print('[ECB] Average bits changed:', encrypt(toBytes(key), AES.MODE_ECB))

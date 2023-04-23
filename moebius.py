@@ -1,6 +1,5 @@
 import math
 import sys
-
 def primeFactors(n: int) -> list:
     factors = []
     i = 2
@@ -49,4 +48,4 @@ if __name__ == '__main__':
         n = 10
     S = sum([moebius(d) * 2 ** (n / d) for d in findDivisors(n)])
     N = S / n
-    print("N_2("+str(n)+") =", N)
+    print("[1] N_2("+str(n)+") =", N)
