@@ -1,5 +1,6 @@
 ALPHABET = 'αβγδεζηθικλμνξοπρστυφχψω'
 
+
 def decrypt(cipher: str, n: int) -> str:
     dec = ''
     for char in cipher:

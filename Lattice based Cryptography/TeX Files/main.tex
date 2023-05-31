@@ -1,15 +1,20 @@
 \documentclass[aspectratio=169]{beamer}
 \usepackage{settings}
 
-\title{Presantation for NGE-06-03}
-\subtitle{\emph{Tools for Lattice based Cryptography: LLL \& BKZ - Algorithms}}
+\title{Presentation for NGE-06-03}
+\subtitle{\emph{Tools for lattice based cryptography: LLL \& BKZ - Algorithms}}
 \author{Alexandros Korkos}
 \institute{Aristotle University of Thessaloniki \\ Computer Science Department}
 \date{\today}
 
 \begin{document}
 
-    \frame{\titlepage}
+    \begin{frame}
+      \vfilll
+      \titlepage
+      \vfilll
+      \usebeamerfont{institute} \textbf{Contact:} \href{mailto:alexkork@csd.auth.gr}{alexkork@csd.auth.gr}
+    \end{frame}
 
     \input{abstract.tex}
 
@@ -26,11 +31,9 @@
 
         Some lattice based schemes:
 
-        \begin{itemize}
-            \item BLISS (Bimodal Lattice Signature Scheme) 
-            \item qTESLA (quantum-safe Tesla)
-            \item GGH encryption scheme,
-            \item CRYSTALS-Kyber
+        \begin{itemize} 
+            \item NTRU encryption scheme
+            \item GGH encryption scheme
             \item The Ajtai-Dwork Public Key Cryptosystem
             \item ...
         \end{itemize}

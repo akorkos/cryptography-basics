@@ -1,14 +1,24 @@
 from math import gcd
+from random import randint
 
 
-def pollard(f, x0, N):
+# https://cp-algorithms.com/algebra/factorization.html#implementation
+def f(x: int, N: int):
+    return (x ** 2 + 1) % N
+
+
+def rho(N: int):
+    x0 = randint(2, N - 1)
     x = x0
     y = x0
-    i = 1
-    while i <= N:
-        x = f(x)
-        y = f(f(y))
+    d = 1
+    while d == 1:
+        x = f(x, N)
+        y = f(y, N)
+        y = f(y, N)
         d = gcd(abs(x - y), N)
-        if 1 < d < N:
-            return d
-    return None
+    return d
+
+
+if __name__ == "__main__":
+    print(rho(2 ** 257 - 1))
