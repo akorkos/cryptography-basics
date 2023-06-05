@@ -1,0 +1,538 @@
+\documentclass[oneside]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% For Greek Chars using pdfLaTeX                                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[english, greek]{babel}
+\usepackage{fontspec}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Other useful packages                                                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[x11names]{xcolor}
+\usepackage[pdfusetitle]{hyperref}
+\usepackage[most]{tcolorbox}
+\usepackage[bf]{caption} 
+\usepackage[automark]{scrlayer-scrpage}
+\usepackage[newfloat]{minted}
+\usepackage{amssymb, bm, amsmath}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{float}
+\usepackage{array,tabularx}
+\usepackage{fontawesome5}
+\usepackage{colortbl}
+\usepackage{dirtree}
+\usepackage{menukeys}
+\usepackage{mathtools}
+\usepackage{listings}
+\usepackage{amsthm}
+\usepackage{mdframed}
+\usepackage{accsupp}
+\usepackage{multirow}
+\usepackage{breqn}
+\usepackage{cancel}
+\usepackage{layouts}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Shortcut creation                                                    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\let\b\textbf
+\let\t\texttt
+\let\u\underline
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Font Setup                                                           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setmainfont{Open Sans}
+\setmonofont{Droid Sans Mono}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Pagestyle options                                                    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\clearpairofpagestyles 
+\newlength{\headerrulelength}
+\setlength{\headerrulelength}{3ex}
+
+\newcommand*{\headerrule}{
+    \rule[-1ex]{0.1em}{\headerrulelength}
+}
+
+% Define headers:
+\lehead{% Left, even head
+    \llap{
+        \pagemark\enskip\headerrule
+    }
+    \enskip\headmark
+}
+
+\rohead{% Right, odd head
+    \headmark\enskip
+    \rlap{
+        \headerrule\enskip\pagemark
+    }
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Color definition                                                     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\colorlet{g1}{black!70}
+\colorlet{g3}{black!40}
+\colorlet{g6}{black!05}
+\definecolor{darklink}{RGB}{48, 62, 116}
+\definecolor{darklinkGreen}{RGB}{65, 107, 60}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Caption options                                                      %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\addto\captionsenglish{\renewcommand{\figurename}{Σχήμα}}
+\addto\captionsenglish{\renewcommand{\tablename}{Πίνακας}}
+\addto\captionsenglish{\renewcommand{\bibname}{Πηγές}}
+\addto\captionsenglish{\renewcommand{\lstlistingname}{Κώδικας}}
+\addto\captionsenglish{\renewcommand{\listingname}{Κώδικας}}
+\addto\captionsenglish{\renewcommand{\chaptername}{Κεφάλαιο}}
+\addto\captionsenglish{\renewcommand{\contentsname}{Περιεχόμενα}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Hyperref options                                                     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hypersetup{
+    colorlinks=true,
+    allcolors=darklink,
+    urlcolor=darklinkGreen,
+    plainpages=false,
+    pdftitle={Ασύμμετρη Κρυπτογραφία},
+    pdfsubject={Ασύμμετρη Κρυπτογραφία},
+    pdfcreator={LaTeX with hyperref},
+    pdfauthor={Αλέξανδρος Κόρκος},
+    bookmarksnumbered=true,
+    pdfdisplaydoctitle,
+    pdfkeywords={%
+        cryptography,%
+        symmetric,%
+        rc4,%
+        otp,%
+        shift-cipher,%
+        vigenere-cipher,%
+        perfect-secrecy,%
+        aes,
+        avalanche-effect 
+    }
+}
+
+\newcommand{\Rule}{\rule{\linewidth}{0.5mm}}
+
+\SetupFloatingEnvironment{listing}{name={Κώδικας}}
+
+\newenvironment{longlisting}{\captionsetup{type=listing}}{}
+
+\newcommand*{\emptyaccsupp}[1]{%
+        \BeginAccSupp{ActualText={}}#1\EndAccSupp{}%
+}%
+
+\renewcommand*{\theFancyVerbLine}{ % Redefine how line numbers are printed
+        \textcolor{g3}{\ttfamily\tiny\emptyaccsupp{\arabic{FancyVerbLine}}}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Options                                                              %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\newtheorem*{definition}{Ορισμός}
+\newtheorem*{lemma}{Πρόταση}
+
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\setcounter{MaxMatrixCols}{16}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Document begin                                                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+    
+\begin{titlepage}
+
+    \begin{figure}[!htb]
+        \centering
+        \begin{minipage}{0.45\textwidth}
+            \centering
+            \includegraphics[width=0.4\textwidth]{Images/logo_csd.png} % first figure itself
+        \end{minipage}\hfill
+        \begin{minipage}{0.45\textwidth}
+            \centering
+            \includegraphics[width=0.5\textwidth]{Images/logo_auth.png} % second figure itself
+        \end{minipage}
+    \end{figure}
+     
+    \begin{center}
+        \LARGE{Αριστοτέλειο Πανεπιστήμιο Θεσσαλονίκης}
+        \vspace{5mm}
+        \\ \Large{Τμήμα Πληροφορικής}
+    \end{center}
+    
+    \vspace*{\fill}
+    
+    \begin{center}
+        \Rule \\[0.4cm]
+        { \LARGE 
+            \textbf{Τεχνική αναφορά για NGE-06-03}\\[0.4cm]
+            \emph{Ασύμμετρη Κρυπτογραφία}\\[0.4cm]
+        }
+        \Rule \\[0.4cm]
+    \end{center}
+    
+    \vspace*{\fill}
+    
+    \begin{center}
+        Αλέξανδρος Κόρκος \\
+        \textbf{\href{mailto:alexkork@csd.auth.gr}{alexkork@csd.auth.gr}}\\
+        \textbf{3870}
+        \Rule \\[0.4cm]
+        Θεσσαλονίκη, \today
+    \end{center}
+    
+\end{titlepage}
+
+\vspace*{\fill}
+
+\begin{center}
+    \href{https://creativecommons.org/licenses/by-nc-sa/4.0/deed.el}{\includegraphics[scale=0.2]{Images/cc.png}} \\
+    \Rule \\[0.4cm]
+    Το έργο αυτό διατίθεται υπό τους όρους της άδειας \textbf{\href{https://creativecommons.org/licenses/by-nc-sa/4.0/deed.el}{Create Commons "Αναφορά Δημιουργού - Μη Εμπορική Χρήση - Παρόμοια Διανομή 4.0 Διεθνές"}}. \\ 
+\end{center}
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\section{Diffie-Hellman}
+
+\subsection{Εκφώνηση} 
+
+Εφαρμόστε το πρωτόκολλο ανταλλαγής Diffie-Hellman για $g = 3, p = 101, a = 77, b = 91$. Δηλ., πρέπει να υπολογίσετε το κοινό κλειδί. Θα χρειαστεί να υλοποιηθεί Αλγόριθμος (7.2.2) (Από \cite{draz} στην σελίδα 82).
+
+\subsection{Λύση}
+%%%
+
+\section{Γρήγορη ύψωση σε δύναμή}
+
+\subsection{Εκφώνηση} 
+
+Υλοποιήστε σε όποια γλώσσα προγραμματισμού θέλετε τον Αλγόριθμο (7.2.2) (Από \cite{draz} στην σελίδα 82) και κατόπιν υπολογίστε τη δύναμη $5^{77} \Mod{19}$.
+
+\subsection{Λύση} 
+%%%
+
+\section{Πρώτοι αριθμοί}
+
+\subsection{Εκφώνηση} 
+
+Να αποδείξετε ότι ο $n$-οστος πρώτος που ικανοποιεί την ανισότητα 
+
+\begin{equation}
+    p_n < 2^{2^{n}}
+\end{equation}
+
+\subsection{Λύση} 
+
+\subsubsection{Μαθηματική επίλυση}
+
+% https://math.stackexchange.com/questions/65630/how-to-show-p-n-leq-22n
+
+Υποθέτουμε ότι $p_i \leq 2^{2^{i}}  \forall i \leq n$. Στην συνέχεια, το $p_1p_2...p_n + 1$ δεν διαιρείται από κανένα από τους πρώτους αριθμούς $p_1, ..., p_n$, έτσι
+
+\begin{equation}
+    p_{n+1} \leq \prod_{i=1}^n p_i + 1
+\end{equation}
+
+Αντικαθιστώντας τις προηγούμενες ανισώσεις για το $p_i$ και χρησιμοποιώντας $\sum_{i=1}^{n} 2^i = 2^{n+1} - 2$, έχουμε
+
+\begin{equation}
+    p_{n+1} \leq \big( \prod_{i=1}^n 2^{2^{i}} \big) + 1 = (2^{\sum_{i=1}^{n} 2^i}) + 1 = 2^{2^{n+1}-2} + 1 \leq 2^{2^{n+1}}
+\end{equation}
+
+\subsubsection{Συμπέρασμα}
+
+Μπορούμε να αποφανθούμε, πως η μέθοδος αποκρυπτογράφησης αποτελεί ένα τρόπο για να βρούμε το αρχικό μήνυμα, καθώς ακολουθώντας διαφορετική συλλογιστική πορεία στις πράξεις μπορούμε και πάλι να βρούμε το αρχικό μήνυμα.
+
+\section{Ιδιότητες του gcd}
+
+\subsection{Εκφώνηση}
+
+Έστω $a,b \in \mathbb{Z}^+ $. Αν $\gcd(a,b) = 1$, τότε
+
+\begin{itemize}
+    \item $\forall c \in \mathbb{Z}$ ισχύει $\gcd(ac, b) = \gcd(c, b)$
+    \item $\gcd(a+b, a-b) \in \{1,2\}$. Ειδικότερα, ν.α.ο αν $a,b$ περιττοί θετικοί ακέραιοι $\gcd(a+b,a-b) = 2$
+    \item $\gcd(2^a - 1, 2^b - 1) = 1$
+    \item $\gcd(M_p, M_q) = 1$ όπου $M_p = 2^p - 1, M_q = 2^q - 1$ Mersenne ακέραιοι $(p, q \text{ πρώτοι με } p \neq q)$.
+\end{itemize}
+
+\subsection{Λύση} 
+
+\subsubsection{Μαθηματική επίλυση}
+
+\begin{lemma}
+    $\forall c \in \mathbb{Z}$ ισχύει $\gcd(ac, b) = \gcd(c, b)$
+\end{lemma}
+
+% https://math.stackexchange.com/questions/20889/prove-that-if-gcd-a-b-1-then-gcd-ac-b-gcd-c-b
+\begin{proof}
+    Έστω ότι  $d_1 = \gcd(c,b)$ και $d_2 = \gcd(ac,b)$.
+    Τότε έχουμε $cx_1 + by_1 = d_1, acx_2 + by_2 = d_2$ και $ax + by = 1$ από Bezout.
+    Αρχικά πολλαπλασιάζουμε την $ax+by = 1$ με το $d_1$ για να δείξουμε $d_2 | d_1$.
+    
+    \begin{equation}
+        \begin{split}
+            d_1(ax + by = 1)  \\
+            \Rightarrow ax(cx_1 + by_1) + bd_1y = d_1  \\
+            \Rightarrow ac(xx_1) + b(axy_1 + d_1y)  = d_1 
+        \end{split}
+    \end{equation}
+    
+    Εφόσον ισχύει ότι $d_2 = \gcd(ac, b)$ τότε διαίρει κάθε ακέραιο γραμμικό συνδυασμό των $ac$ και $b$ και άρα έχουμε $d_2|d_1$. 
+
+    Με παρόμοιο τρόπο, θα πολλαπλασιάσουμε το $ax + by = 1$ με το $d_2$ και έχουμε
+
+    \begin{equation}
+        \begin{split}
+            d_2(ax + by = 1) \\
+            \Rightarrow ax(acx_2 + by_2) + bd_2y = d_2 \\
+            \Rightarrow c(a^2xx_2) + b(axy_2 + d_2y) = d_2
+        \end{split}
+    \end{equation}
+
+    Ομοίως με πριν ισχύει ότι $d_1 = \gcd(c,b)$, τότε διαίρει κάθε ακέραιο γραμμικό συνδυασμό των $ac$ και $b$ άρα έχουμε $d_1|d_2$.
+
+    Τελικά, επειδή έχουμε $d_1|d_2, d_2|d_1$ και $d_1$ και $d_2$ είναι μη-αρνητικοί (αφού είναι το $\gcd$ δύο ακεραίων), καταλήγουμε ότι $d_1 = d_2$.
+    
+    Επομένως, ο $\gcd(ac,b) = \gcd(c,b)$.
+\end{proof}
+
+\begin{lemma}
+    $\gcd(a+b, a-b) \in \{1,2\}$
+\end{lemma}
+
+\begin{proof}
+    Έστω $d$ κοινός διαιρέτης των $a+b$ και $a-b$, τότε ο $d$ διαιρεί και το άθροισμα και την διαφορά τους
+    \begin{equation*}
+        d|(a+b)
+    \end{equation*}
+    \begin{equation*}
+        d|(a-b)
+    \end{equation*}
+    \begin{equation*}
+        d|(a+b) + (a-b) = 2a
+    \end{equation*}
+    \begin{equation*}
+        d|(a+b) - (a-b) = 2b
+    \end{equation*}
+
+    Άρα, έχουμε
+
+    \begin{equation}
+        d|\gcd(2a+2b) = 2\cancelto{1}{\gcd(a,b)} \Rightarrow d|2
+    \end{equation}
+
+    που σημαίνει ότι το $d \in \{1,2\}$.
+\end{proof}
+
+\begin{lemma}
+     Ν.α.ο αν $a,b$ περιττοί θετικοί ακέραιοι $\gcd(a+b,a-b) = 2$
+\end{lemma}
+
+\begin{proof}
+    Έχουμε $a,b$ περιττούς, που γράφονται ως εξής
+    \begin{equation*}
+        a = 2k_1 + 1, k_1 \in \mathbb{Z}
+    \end{equation*}
+    \begin{equation*}
+        b = 2k_2 + 1, k_2 \in \mathbb{Z}
+    \end{equation*}
+
+    Επίσης, είναι γνωστό πως το άθροισμα και η διαφορά δυο περιττών αριθμών είναι άρτιος αριθμός.
+
+    Αφού πρόκειται για δυο άρτιος αριθμούς, τότε και οι διαιρέτες τους θα είναι άρτιοι.
+
+    Παραπάνω, αποδείξαμε πως αν $d$ διαιρέτης, τότε $d \in \{1,2\}$ όπου μόνο για $d = 2$ άρτιος.
+\end{proof}
+
+% https://math.stackexchange.com/questions/225289/proving-that-gcd2m-1-2n-1-2-gcdm-n-1
+\begin{lemma}
+    $\gcd(2^a - 1, 2^b - 1) = 1$
+\end{lemma}
+
+\begin{proof}
+    Έστω $p = \gcd(a,b)$ τότε $p = ax + by$ με $x, y \in \mathbb{Z}$.
+    
+    Αν, $d = \gcd(2^a-1,2^b-1)$ τότε $2^a \equiv 1 \Mod{d}$ και $2^b \equiv 1 (\Mod{d})$ έτσι έχουμε
+
+    \begin{equation}
+        2^p = 2^{ax+by} = (2^a)^x(2^b)^y \equiv 1 \Mod{d}
+    \end{equation}
+
+    Συνεπώς $d | 2^p - 1$.
+    Από την άλλη, αν $p | a$ τότε $2^p - 1 | 2^a - 1$ άρα $2^p - 1$ κοινός παράγοντάς.
+    
+    Τελικά, $\gcd(2^a - 1, 2^b - 1) = 2^{\cancelto{1}{{\gcd(a,b)}}} - 1 \Rightarrow \gcd(2^a - 1, 2^b - 1) = 1$
+\end{proof}
+
+\begin{lemma}
+    $\gcd(M_p, M_q) = 1$ όπου $M_p = 2^p - 1, M_q = 2^q - 1$
+\end{lemma}
+
+\begin{proof}
+    Παρατηρείται ότι εάν αντικαταστήσω στην προηγουμένη απόδειξή με $M_p, M_q$ ισχύει η παραπάνω σχέση.
+\end{proof}
+
+
+\section{Ακόμα ένα πρόβλημα με gcd}
+
+\subsection{Εκφώνηση}
+
+Έστω $a, b, c$ ακέραιοι και $\delta = a^2 - 4bc^2 \neq 0$. Ν.α.ο. $\gcd(\delta, 4c^2)$ είναι τετράγωνο.
+
+\subsection{Λύση} 
+%%%
+
+\section{Ιδιότητα των περιττών ακέραιων}
+
+\subsection{Εκφώνηση}
+
+Επαληθεύστε πειραματικά ότι για όλους τους περιττούς ακέραιους $< 2^{20}$ ισχύει
+
+\begin{equation}\label{eq:611}
+    \frac{\sigma(n)}{n} < \frac{e^{\gamma}}{2}\ln{\ln{n}} + \frac{0.74}{\ln{\ln{n}}}
+\end{equation}
+
+\subsection{Λύση} 
+%%%
+
+\section{Carmichael}
+
+\subsection{Εκφώνηση}
+
+Ν.α.ο οι αριθμοί $9999109081, 6553130926752006031481761$ είναι αριθμοί . Μπορείτε να βρείτε κάποιον μεγαλύτερο;
+Υποδ. Να γίνει χρήση του κριτηρίου Korselt.
+
+\subsection{Λύση} 
+%%%
+
+\section{Τεστ του Fermat}
+
+\subsection{Εκφώνηση}
+
+Ικανοποιούν το τεστ ου Fermat οι αριθμοί
+
+\[
+    835335 \cdot 2^{39014} \pm 1;
+\]
+
+\subsection{Λύση} 
+%%%
+
+\section{Trial Division}
+
+\subsection{Εκφώνηση}
+
+Να υλοποιήσετε τον αλγόριθμο δοκιμαστικής διαίρεσης και να παραγοντοποιήσετε τους αριθμούς $2^{62} - 1, 2^{102} - 1$.
+
+\subsection{Λύση} 
+%%%
+
+\section{Αλγόριθμος του Lehman}
+
+\subsection{Εκφώνηση} 
+
+Να υλοποιήσετε τον αλγόριθμο του Lehman. Κατόπιν, διαλέξτε ένα τυχαίο ακέραιο με 100 bits. Θεωρούμε επιτυχία, αν ο αλγόριθμος σας παραγοντοποιήσει τον τυχαίο ακέραιο σε λιγότερο από 10 δευτερόλεπτα στον Η/Υ. Εκτελέσετε το προηγούμενο πείραμα 100 φορές. Ποιο το ποσοστό επιτυχίας;
+
+\subsection{Λύση}
+%%%
+
+\section{Αλγόριθμος του Pollard}
+
+\subsection{Εκφώνηση} 
+
+Σε αυτή την άσκησή θα δούμε πως μπορούμε να χρησιμοποιήσουμε τον αλγόριθμο του Pollard για παραγοντοποιήση. Θεωρούμε ένα φυσικό $N$ και ζητάμε ένα διαιρέτη του. Έστω $f(x) = x^2 + 1 \Mod{N}$ και ας είναι το $x_0$ τυχαία τιμή από το $\{
+2, 3, ..., N - 1\}$. Η γραμμή 6 στον Αλγόριθμο (10.2.2) θα είναι
+
+\[
+    1 < \gcd(|x - y|, N) < N.
+\]
+
+Υλοποιήστε τον αλγόριθμο και βρείτε ένα διαιρέτη του αριθμού $N = 2^{257} - 1$.
+
+\subsection{Λύση}
+%%%
+
+\section{RSA}
+
+\subsection{Εκφώνηση} 
+
+Δίνεται το δημόσιο κλειδί $(N, e)=(11413, 19)$. Βρείτε το ιδιωτικό κλειδί και κατόπιν αποκρυπτογραφήστε το μήνυμα
+
+\[
+    C = (3203, 909, 3143, 5255, 5343, 3203, 909, 9958, 5278, 5343, 9958, 5278, 4674, 909, 
+    9958, 792, 909, 4132, 3143, 9958, 3203, 5343, 792, 3143, 4443)
+\]
+
+Υποϑέστε ότι τα γράμματα στο αρχικό μήνυμα $m$, αναπαρίστανται από τις ASCII τιμές τους (δουλέψτε block by block το $C$).
+Υποδ. Παραγοντοποιήστε $N$, κατόπιν υπολογίστε το $\phi(N)$.
+
+\subsection{Λύση}
+%%%
+
+\section{Wiener Attack}
+
+\subsection{Εκφώνηση} 
+
+Ας θεωρήσουμε $(N, e) = (194749497518847283, 50736902528669041)$ και το κρυπτογραφημένο κείμενο \href{https://github.com/drazioti/book_crypto/blob/master/public_key_crypto/7.2}{$C$}, που έχει προκύψει από το Textbook RSA και έπειτα κωδικοποιήθηκε. Εφαρμοστέ την επίθεση Wiener, για να βρείτε το κλειδί $d$. Υποθέτουμε ότι στο αρχικό κείμενο $m$ κάθε χαρακτήρας έχει αντικατασταθεί από την ASCII τιμή του. Τέλος, βρείτε το αρχικό $m$.
+
+\subsection{Λύση}
+%%%
+
+\section{Naive RSA}
+
+\subsection{Εκφώνηση} 
+
+Δίνεται ότι δημόσιο κλειδί μιας (naive) ψηφιακής υπογραφής RSA, $(N, e) = 9899, 839)$. Αν η ψηφιακή υπογραφή του μηνύματος $m = 3$ είναι $s = 301$, μπορείτε να επαληθεύσετε ότι είναι σωστή η ψηφιακή υπογραφή;
+
+\subsection{Λύση}
+%%%
+
+\section{gpg}
+
+\subsection{Εκφώνηση} 
+
+Στείλτε ένα κρυπτογραφημένο μήνυμα στον συγγραφέα (το δημόσιο κλειδί που έχει αναγνωριστικό \href{https://github.com/drazioti/my_public_key/blob/main/pk.asc}{0xEB1185F82713D6DF}). Από το δημόσιο κλειδί το αναγνωριστικό προκύπτει (σε bash) αν δώσουμε τον παρακάτω κώδικα
+
+\begin{listing}[H]
+\begin{minted}{bash}
+$gpg --list - packets pk. asc | awk '/ keyid :/{ print $2 }'
+\end{minted}
+\caption{gpg κώδικας σε bash}
+\label{algo:bash}
+\end{listing}
+
+\subsection{Λύση}
+%%%
+
+\begin{thebibliography}{3} 
+    \bibitem{fa} The Mad Doctor, \emph{\href{https://www.cipherchallenge.org/wp-content/uploads/2020/12/Five-ways-to-crack-a-Vigenere-cipher.pdf}{Five Ways to Crack a Vigenère Cipher}}, University of Southampton, 2020.
+    \bibitem{sj} Stanislaw Jarecki, \emph{\href{https://www.ics.uci.edu/\%7Estasio/fall04/lect1.pdf}{Lecture 1: Crypto Overview, Perfect Secrecy, One-time Pad}}, Donald Bren School of Information and Computer Sciences, 2004.
+    \bibitem{draz} Δραζιώτης, Κ., \emph{\href{https://repository.kallipos.gr/handle/11419/8016?&locale=el}{Εισαγωγή στην Κρυπτογραφία}} [Προπτυχιακό εγχειρίδιο], Κάλλιπος, Ανοικτές Ακαδημαϊκές Εκδόσεις, 2022.
+\end{thebibliography}
+
+\end{document}
