@@ -1,8 +1,9 @@
-from random import randint
+from random import randint, randrange
 from math import gcd
+from sympy.ntheory import isprime
 
 
-def fermat(n, k):
+def fermat(n, k = 5):
     i = 1
     j = 0
     while i <= k:
@@ -18,5 +19,7 @@ def fermat(n, k):
 
 
 if __name__ == "__main__":
-    a = 835335 * 2 ** 39014 + 1
-    print(fermat(a, 10))
+    a = 835335 * 2 ** 39014 + 1     # ('Prime', 0.96875)
+    b = 835335 * 2 ** 39014 - 1     # ('Prime', 0.96875)
+    print(fermat(a))
+    print(fermat(b))

@@ -1,42 +1,30 @@
 from trial_division import trialDivision
-from math import floor, ceil, sqrt, gcd
-from random import randint
-import time
-
-
-def randomBinaryNumber(N: int = 100) -> str:
-    number = ""
-    for _ in range(N):
-        number += str(randint(0, 1))
-    return number
+from random import getrandbits
+from gmpy2 import isqrt, is_square, ceil, floor, gcd, sqrt, cbrt
 
 
 def lehman(n: int):
-    st = time.time()
-    L = trialDivision(n)
-    for d in L:
-        if d < n ** (1/3):
-            et = time.time()
-            if et - st > 10:
-                return -1
-            return d
+    cbrtN = cbrt(n)
+    sixthRootN = sqrt(cbrtN)
+    print(floor(cbrtN))
 
-    for k in range(1, floor(n ** (1/3)) + 1):
-        for a in range(ceil(sqrt(4 * k * n)), floor(sqrt(4 * k * n) + (n ** (1/6)) / (4 * sqrt(k)))):
-            b = sqrt(a ** 2 - 4 * k * n)
-            if int(b) == b:
-                et = time.time()
-                if et - st > 10:
-                    return -1
-                return gcd(a - int(b), n)
+    for k in range(1, int(floor(cbrtN)) + 1):
+        sqrt4kN = sqrt(4 * k * n)
+        aStart = int(ceil(sqrt4kN))
+        aLimit = int(floor(sqrt4kN + sixthRootN / (4 * sqrt(k))))
+        for a in range(aStart, aLimit + 1):
+            test = a ** 2 - 4 * k * n
+            b = isqrt(test)
+            print(b)
+            if is_square(b):
+                return gcd(a + b, n)
+    return 0  # fail
 
 
 if __name__ == "__main__":
     counter = 0
 
-    for _ in range(1000):
-        n = randomBinaryNumber()
-        if lehman(int(n, 2)) != 1:
-            counter += 1
+    for _ in range(10):
+        n = getrandbits(100)
+        print(n, lehman(n))
 
-    print(counter)

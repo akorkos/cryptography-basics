@@ -1,26 +1,30 @@
-from math import log, e
+import collections
+from math import log, e, prod
 import os
 from concurrent.futures import ProcessPoolExecutor
-
-eg = e ** .577
-
-
-def sumOfDivisors(n: int):
-    sum = 0
-    # max_divisor = (n + 1) // 2
-    for i in range(n + 1, 1, -1):
-        if n % i == 0:
-            sum += i
-    return sum
+from trial_division import trialDivision
 
 
 def upperBound(n: int) -> float:
-    return (eg / 2) * log(log(n)) + .74 / log(log(n))
+    return (e ** .577216 / 2) * log(log(n)) + .74 / log(log(n))
+
+
+def condition(n) -> None:
+    s = sigma(n)
+    if s / n >= upperBound(n):
+        print("Error", n)
+
+
+def sigma(n: int) -> int:
+    factors = collections.Counter(trialDivision(n))
+    powers = [[factor ** i for i in range(count + 1)] for factor, count in factors.items()]
+    sumOfPowFactors = [sum(i) for i in powers]
+    return int(prod(sumOfPowFactors))
 
 
 if __name__ == "__main__":
     N = 2 ** 20
-    for n in range(1, N, 2):
-        if n != 1:
-            if sumOfDivisors(n) / n >= upperBound(n):
-                print("Error", n)
+    workers = os.cpu_count()
+    executor = ProcessPoolExecutor(max_workers=workers)
+    results = executor.map(condition, [_ for _ in range(1, N, 2)])
+

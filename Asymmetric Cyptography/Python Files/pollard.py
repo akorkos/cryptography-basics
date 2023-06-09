@@ -7,7 +7,7 @@ def f(x: int, N: int):
     return (x ** 2 + 1) % N
 
 
-def rho(N: int):
+def rho(N):
     x0 = randint(2, N - 1)
     x = x0
     y = x0
@@ -21,4 +21,5 @@ def rho(N: int):
 
 
 if __name__ == "__main__":
-    print(rho(2 ** 257 - 1))
+    N = 2 ** 257 - 1
+    print(rho(N))  # 535006138814359

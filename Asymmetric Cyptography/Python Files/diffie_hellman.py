@@ -15,6 +15,6 @@ if __name__ == "__main__":
 
     if secretKeyB == secretKeyA:
         print("[01] Exchange key was successfully calculated!")
-        print("[02] Exchange key: ", secretKeyB)
+        print("[02] Exchange key:", secretKeyB)
     else:
         print("[01] Exchange key is wrong!")
