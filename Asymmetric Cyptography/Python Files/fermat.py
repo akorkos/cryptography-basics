@@ -1,25 +1,25 @@
-from random import randint, randrange
-from math import gcd
-from sympy.ntheory import isprime
+from random import randrange
+from gmpy2 import gcd
 
 
-def fermat(n, k = 5):
-    i = 1
-    j = 0
-    while i <= k:
-        a = randint(2, n - 1)
-        if gcd(a, n) > 1:
-            return "Composite", 1
-        if pow(a, n - 1, n):
-            j += 1
-            if j == k:
-                return "Prime", 1 - 2 ** (-k)
-        i += 1
-    return "Composite", 1
+def fermat(p, s=5):
+    if p == 2:
+        return True
+    if not p & 1:  
+        return False
+
+    for i in range(s):
+        a = randrange(2, p - 2)
+        x = pow(a, p - 1, p) 
+        if gcd(a, x) > 1:
+            return False
+        if x != 1:
+            return False
+    return True
 
 
 if __name__ == "__main__":
-    a = 835335 * 2 ** 39014 + 1     # ('Prime', 0.96875)
-    b = 835335 * 2 ** 39014 - 1     # ('Prime', 0.96875)
-    print(fermat(a))
-    print(fermat(b))
+    a = 835335 * 2 ** 39014 + 1  
+    b = 835335 * 2 ** 39014 - 1  
+    print("[01] Fermat test for {0} returns {1}".format(a, fermat(a)))
+    print("[02] Fermat test for {0} returns {1}".format(b, fermat(b)))

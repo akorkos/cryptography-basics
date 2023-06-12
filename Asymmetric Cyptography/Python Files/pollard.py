@@ -3,11 +3,11 @@ from random import randint
 
 
 # https://cp-algorithms.com/algebra/factorization.html#implementation
-def f(x: int, N: int):
+def f(x: int, N: int) -> int:
     return (x ** 2 + 1) % N
 
 
-def rho(N):
+def pollard(N: int) -> int:
     x0 = randint(2, N - 1)
     x = x0
     y = x0
@@ -22,4 +22,4 @@ def rho(N):
 
 if __name__ == "__main__":
     N = 2 ** 257 - 1
-    print(rho(N))  # 535006138814359
+    print(pollard(N))  # 535006138814359

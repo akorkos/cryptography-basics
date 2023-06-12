@@ -18,7 +18,7 @@ def fermat(n: int) -> (int, int):
 
 
 # https://www.geeksforgeeks.org/multiplicative-inverse-under-modulo-m/
-def modInverse(a, m):
+def inverse_mod(a: int, m: int) -> int:
     for x in range(1, m):
         if (a * x) % m == 1:
             return x
@@ -39,7 +39,7 @@ if __name__ == "__main__":
 
     p, q = fermat(N)
     phi = (p - 1) * (q - 1)
-    d = modInverse(e, phi)
+    d = inverse_mod(e, phi)
 
     m = "".join([chr(fpow(c, d, N)) for c in C])
 

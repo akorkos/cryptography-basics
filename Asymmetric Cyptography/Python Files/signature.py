@@ -9,5 +9,5 @@ if __name__ == "__main__":
 
     a = fpow(s, e, N)
 
-    print(a, m)
+    print("[01] a = {0} & m = {1}".format(a, m))
 

@@ -19,4 +19,4 @@ if __name__ == "__main__":
     e = 77
     m = 19
 
-    print("[01] 5 ^ 77 mod 19 = ", fpow(b, e, m))
+    print("[01] 5 ^ 77 mod 19 = {0}".format(fpow(b, e, m)))

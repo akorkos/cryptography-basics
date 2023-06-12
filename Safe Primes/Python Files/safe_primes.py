@@ -1,6 +1,7 @@
 import random
 from timeit import default_timer as timer
 from multiprocessing.pool import Pool
+from sympy.ntheory import isprime
 
 
 def equiv(a: int, b: int, n: int) -> bool:
@@ -25,6 +26,13 @@ def miller_rabin(p: int, s=5) -> bool:
     if not equiv(p, 2, 3):
         return False
     if not equiv(p, 3, 4):
+        return False
+
+    q = 2 * p + 1
+
+    if not equiv(q, 2, 3):
+        return False
+    if not equiv(q, 3, 4):
         return False
 
     p1 = p - 1
@@ -65,17 +73,17 @@ def generate_primes(min: int, max: int, n=512, k=1) -> list:
     assert k > 0
     assert 0 < n < 4096
 
-    x = random.getrandbits(n)
-    while max < x < min:
-        x = random.getrandbits(n)
+    p = random.getrandbits(n)
+    while max < p < min:
+        p = random.getrandbits(n)
 
     primes = []
 
     while k > 0:
-        if miller_rabin(x, s=7):
-            primes.append(x)
+        if miller_rabin(p, s=7) and mi:
+            primes.append(p)
             k -= 1
-        x += 1
+        p += 1
 
     return primes
 

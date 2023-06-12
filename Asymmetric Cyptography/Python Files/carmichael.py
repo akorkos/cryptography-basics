@@ -1,5 +1,3 @@
-import collections
-from trial_division import trialDivision
 from fermat import fermat
 from sympy.ntheory import factorint
 
@@ -19,9 +17,7 @@ def korselt(n: int, primes: dict) -> bool:
 
 
 def is_carmichael(n: int) -> str:
-    primes = factorint(n)  #dict(collections.Counter(trialDivision(n)))
-    print(primes)
-    print(not fermat(n) , square_free(primes) , korselt(n, primes))
+    primes = factorint(n)
     if not fermat(n) and square_free(primes) and korselt(n, primes):
         return "is Carmichael"
     return "is not Carmichael"
