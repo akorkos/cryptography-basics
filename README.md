@@ -4,4 +4,4 @@ The material was developed during the course [Foundations of Cryptography  [NGE-
 
 ## Documentation
 
-The results of the assignments are consolidated in the file [Cryptography 101 **(GR)**](https://github.com/akorkos/Cryptography/blob/main/Cryptography_101.pdf), as well as individually in their respective folders.
+The results of the assignments are consolidated in the file [wording **(GR)**](https://github.com/akorkos/Cryptography/blob/main/wording.pdf), as well as individually in their respective folders.
